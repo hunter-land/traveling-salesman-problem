@@ -108,5 +108,9 @@ int main() {
 		cities.push_back(c);
 	}
 	tour bestPath = nearestNeighbor(cities, 150);
-	std::cout << "Tour(" << bestPath.cities[0].id << ") length of " << bestPath.length << " between " << bestPath.cities.size() << "/" << cities.size() << " cities." << std::endl;
+	std::cout << bestPath.length << std::endl;
+	for(city c : bestPath.cities) {
+		std::cout << c.id << std::endl;
+	}
+	//std::cout << "Tour(" << bestPath.cities[0].id << ") length of " << bestPath.length << " between " << bestPath.cities.size() << "/" << cities.size() << " cities." << std::endl;
 }
