@@ -3,8 +3,11 @@ Hunter Land
 Tanner Roesseau
 Cody Ray
 
-To compile on flip servers, run:
-g++ ./main.cpp -std=c++11 -o ./nearestNeighbor
+To compile the code, run
+g++ -std=c++11 ./main.cpp -o ./main
 
-To run, pipe the file into the program and pipe output to output file
-./nearestNeighbor < {inputFile} > {outputFile}
+To run the code with fileX as input and fileY as output, use
+./main < fileX > fileY
+
+ie
+./main < ./test-input-1.txt > ./test-input-7.txt.tour
