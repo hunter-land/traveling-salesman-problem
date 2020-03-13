@@ -4,6 +4,7 @@
 #include <cmath>
 #include <limits.h>
 
+//A city, its id, and coords
 struct city {
 	unsigned int id = 0;
 	int x = 0;
@@ -14,15 +15,18 @@ struct city {
 	}
 };
 
+//A tour of cities
 struct tour {
 	unsigned long long length = ULLONG_MAX;
 	std::vector<city> cities;
 };
 
+//Get distance between cities
 unsigned int cityDistance(city a, city b) {
 	return std::round(std::sqrt(std::pow(a.x - b.x, 2) + std::pow(a.y - b.y, 2)));
 }
 
+//Approximate TSP, with a max number of attempts
 tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
 	// for every city
 	// 	for unusedCities
@@ -32,85 +36,75 @@ tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
 	// 	trackBest
 	// return best graph1
 
-	std::vector<city> bestGraph = cities;
-	unsigned long long bestLength = ULLONG_MAX;
+	// std::vector<city> bestGraph = cities;
+	// unsigned long long bestLength = ULLONG_MAX;
+	tour bestTour;
 	size_t stepSize = std::max((size_t)1, cities.size()/maxTrys);
 	for(size_t i = 0, j = 0; i < cities.size() && j < maxTrys; i += stepSize) {
 		city &startingCity = cities[i];
 		//std::cout << "Starting from #" << startingCity.id;// << std::endl;
 		std::vector<city> thisGraph = {startingCity};
-		//thisGraph.push_back(startingCity);
 		unsigned long long thisGraphLength = 0;
 
 		std::vector<city> unusedCities = cities;
 		unusedCities.erase(std::remove(unusedCities.begin(), unusedCities.end(), startingCity), unusedCities.end());
 
-		//std::cout << "Starting with " << thisGraph.size() << ":" << unusedCities.size() << " cities..." << std::endl;
 		while(unusedCities.size() > 0) {
 			city nearest = unusedCities[0];
 			unsigned long long distance = cityDistance(thisGraph[thisGraph.size()-1], nearest);
 			for(size_t i = 1; i < unusedCities.size(); i++) {//for all unusedCities
-				//find the closest one
+				//find the closest city
 				unsigned long long d = cityDistance(thisGraph[thisGraph.size()-1], unusedCities[i]);
 				if(d < distance) {
 					nearest = unusedCities[i];
 					distance = d;
 				}
 			}
-			//std::cout << " +" << distance << ">\t" << nearest.id; //std::cout << "\tNext node #" << nearest.id << std::endl;
-			//add it to thisGraph
+
+			//add nearest city to thisGraph
 			thisGraph.push_back(nearest);
 			thisGraphLength += distance;
 			//remove it from unused cities
 			unusedCities.erase(std::remove(unusedCities.begin(), unusedCities.end(), nearest), unusedCities.end());
 
-			//std::cout << startingCity.id << "\t" << unusedCities.size() << "\t\t" << bestGraph[0].id << "\t" << bestLength << std::endl;
-
-			if(thisGraphLength > bestLength) {
-//				std::cout << "Broken: ";
+			if(thisGraphLength > bestTour.length) {
 				break;
 			}
 		}
-//		std:: cout << thisGraph[0].id << ":\t" << thisGraphLength << " with " << thisGraph.size() << std::endl;
-		// if(thisGraph.size() != cities.size()) {
-		// 	std::cout << "Wrong size, missing ";
-		// 	for(city uc : unusedCities) {
-		// 		std::cout << uc.id << ", ";
-		// 	}
-		// 	std::cout << std::endl;
-		// }
-		if(thisGraphLength < bestLength) { // thisGraph.size() == cities.size()
-			bestGraph = thisGraph;
-			bestLength = thisGraphLength;
+
+		if(thisGraphLength < bestTour.length) {
+			bestTour.cities = thisGraph;
+			bestTour.length = thisGraphLength;
 			//std::cout << "New best: " << thisGraph[0].id << std::endl;
 		} else {
 			//std::cout << "Not best distance: " << thisGraphLength << " vs current " << bestLength << std::endl;
 		}
 	}
-	tour bestTour;
-	bestTour.cities = bestGraph;
-	bestTour.length = bestLength;
+	bestTour.length += cityDistance(bestTour.cities[0], bestTour.cities[bestTour.cities.size()-1]);
 	return bestTour;
 }
 
 int main() {
 	std::string line;
 	std::vector<city> cities;
-	while(std::getline(std::cin, line)) {
+	while(std::getline(std::cin, line)) { //For each city entry (line)
 		city c;
 		size_t s = 0;
-		c.id = std::stod(line, &s);
+		c.id = std::stod(line, &s); //Get city id
 		line = line.substr(s);
-		c.x = std::stod(line, &s);
+		c.x = std::stod(line, &s); //Get x coord
 		line = line.substr(s);
-		c.y = std::stod(line, &s);
+		c.y = std::stod(line, &s); //Get y coord
 		//std::cout << "Added city #" << c.id << "@(" << c.x << "," << c.y << ")" << std::endl;
 		cities.push_back(c);
 	}
-	tour bestPath = nearestNeighbor(cities, 150);
+	tour bestPath = nearestNeighbor(cities, 150); //Solve best tsp path for given list of cities, with a maximum of 150 runs
+	
+	//Output results to file/prompt
 	std::cout << bestPath.length << std::endl;
 	for(city c : bestPath.cities) {
 		std::cout << c.id << std::endl;
 	}
+	
 	//std::cout << "Tour(" << bestPath.cities[0].id << ") length of " << bestPath.length << " between " << bestPath.cities.size() << "/" << cities.size() << " cities." << std::endl;
 }

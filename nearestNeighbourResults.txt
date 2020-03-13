@@ -1,8 +1,8 @@
  input  file |  time  | length | notes
-test-input-1 |  0.008 | 5338   | 4/4 pts
-test-input-2 |  0.046 | 7613   | 4/4 pts
-test-input-3 |  0.576 | 13889  | 4/4 pts
-test-input-4 |  1.503 | 19535  | 4/4 pts
-test-input-5 |  5.953 | 26886  | 4/4 pts
-test-input-6 | 21.543 | 39348  | 4/4 pts
-test-input-7 | 132.047| 61421  | 4/4 pts
+test-input-1 |  0.011 | 6091   | 4/4 pts
+test-input-2 |  0.044 | 8090   | 4/4 pts
+test-input-3 |  0.586 | 14939  | 4/4 pts
+test-input-4 |  1.503 | 19851  | 4/4 pts
+test-input-5 |  5.990 | 27713  | 4/4 pts
+test-input-6 | 21.388 | 40128  | 4/4 pts
+test-input-7 | 133.180| 61849  | 4/4 pts
