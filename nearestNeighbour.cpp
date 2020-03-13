@@ -40,7 +40,7 @@ tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
 			thisGraphLength += distance;
 			//remove it from unused cities
 			unusedCities.erase(std::remove(unusedCities.begin(), unusedCities.end(), nearest), unusedCities.end());
-
+	
 			if(thisGraphLength > bestTour.length) {
 				break;
 			}

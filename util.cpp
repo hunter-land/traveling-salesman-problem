@@ -1,5 +1,6 @@
 #include <limits.h>
 #include <cmath>
+#include <vector>
 
 //A city, its id, and coords
 struct city {
