@@ -17,7 +17,7 @@ tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
 	for(size_t i = 0, j = 0; i < cities.size() && j < maxTrys; i += stepSize) { //Pick maxTrys cities and solve using each as starting city
 		city &startingCity = cities[i];
 		//std::cout << "Starting from #" << startingCity.id;// << std::endl;
-		std::vector<city> thisTour.cities = {startingCity};
+		std::vector<city> thisGraph = {startingCity};
 		unsigned long long thisGraphLength = 0;
 
 		std::vector<city> unusedCities = cities;

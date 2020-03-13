@@ -13,16 +13,15 @@ int main() {
 		c.x = std::stod(line, &s); //Get x coord
 		line = line.substr(s);
 		c.y = std::stod(line, &s); //Get y coord
-		//std::cout << "Added city #" << c.id << "@(" << c.x << "," << c.y << ")" << std::endl;
 		cities.push_back(c);
 	}
-	tour bestPath = nearestNeighbor(cities, 150); //Solve best tsp path for given list of cities, with a maximum of 150 runs
+
+	//Solve best tsp path for given list of cities, with a maximum of 150 iterations
+	tour bestPath = nearestNeighbor(cities, 150); 
 	
-	//Output results to file/prompt
+	//Output results to file
 	std::cout << bestPath.length << std::endl;
 	for(city c : bestPath.cities) {
 		std::cout << c.id << std::endl;
 	}
-	
-	//std::cout << "Tour(" << bestPath.cities[0].id << ") length of " << bestPath.length << " between " << bestPath.cities.size() << "/" << cities.size() << " cities." << std::endl;
 }
