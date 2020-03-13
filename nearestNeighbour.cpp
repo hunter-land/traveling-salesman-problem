@@ -2,16 +2,15 @@
 #include <algorithm>
 #include "util.cpp"
 
-//Approximate TSP, with a max number of attempts
-tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
-	// for every city
-	// 	for unusedCities
-	// 		for unusedCities
-	// 			trackNearest
-	// 		add nearest
-	// 	trackBest
-	// return best graph1
+/*
+	Calculates an approximation for the best TSP tour of the nodes in the cities vector.
 
+	@param cities the set of cities to travel to
+	@param maxTrys will only solve instance of nearest neighbor at most this many times
+
+	@return the calculated optimal tour
+*/
+tour nearestNeighbor(std::vector<city> cities, size_t maxTrys = 10) {
 	tour bestTour;
 	size_t stepSize = std::max((size_t)1, cities.size()/maxTrys);
 	for(size_t i = 0, j = 0; i < cities.size() && j < maxTrys; i += stepSize) { //Pick maxTrys cities and solve using each as starting city
